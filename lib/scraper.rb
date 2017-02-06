@@ -26,30 +26,16 @@ class Scraper
     social_links = page.css("div.social-icon-container a")
     social_links.each do |a|
       value = a.attribute("href").value
-  
-      if value.include?("twitter.com")
-        scraped_student[:twitter] = value
-      else if value.include?("linkedin.com")
-        scraped_student[:linkedin] = value
-        else if value.include?("github.com")
+      case
+        when value.include?("twitter.com")
+          scraped_student[:twitter] = value
+        when value.include?("linkedin.com")
+          scraped_student[:linkedin] = value
+        when value.include?("github.com")
           scraped_student[:github] = value
         else
-         scraped_student[:blog] = value
-        end
-        end
-      end  
-
-      # case value
-      #   when value.include?("twitter.com")
-      #     scraped_student[:twitter] = value
-      #   when "www.linkedin.com"
-      #     scraped_student[:linkedin] = value
-      #   when "github.com"
-      #     scraped_student[:github] = value
-      #   else
-      #     scraped_student[:blog] = value
-      # end 
-
+          scraped_student[:blog] = value
+      end 
     end
 
     scraped_student[:profile_quote] = page.css("div.profile-quote").text
